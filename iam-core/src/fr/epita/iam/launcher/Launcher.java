@@ -4,14 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.datamodel.User;
 import fr.epita.iam.exceptions.EntityCreationException;
+import fr.epita.iam.exceptions.EntityDeletionException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
-import fr.epita.iam.services.identity.IdentityDAO;
-import fr.epita.iam.services.identity.IdentityDAOFactory;
+import fr.epita.iam.logger.Logger;
+import fr.epita.iam.services.dao.IdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAOFactory;
+import fr.epita.iam.services.dao.JDBCUserDAO;
 import fr.epita.iam.ui.ConsoleOperations;
 
 /**
@@ -21,7 +23,7 @@ import fr.epita.iam.ui.ConsoleOperations;
  */
 public class Launcher {
 
-	private final static Logger logger = Logger.getLogger(Launcher.class);
+	private final static Logger logger = new Logger(Launcher.class);
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// initialize resources
@@ -35,7 +37,19 @@ public class Launcher {
 		}
 		final ConsoleOperations console = new ConsoleOperations();
 		// Welcome
+		System.out.println("\n Welcome to Identity Access Management System..!! \n\n");
+
 		// Authentication
+		User userLogin = console.readUserCredentialsFromConsole();
+		JDBCUserDAO userDao = new JDBCUserDAO();
+		boolean isValid = userDao.checkLogin(userLogin);
+
+		if (!isValid) {
+			System.out.println("You have entered wrong credentials. Please try again.");
+			return;
+		} else {
+			System.out.println("Authentication successful");
+		}
 
 		// Menu
 		String choice = "";
@@ -49,6 +63,7 @@ public class Launcher {
 				try {
 					final Identity identity = console.readIdentityFromConsole();
 					dao.create(identity);
+					logger.info("Created identity successfully");
 				} catch (final EntityCreationException ece) {
 					logger.error(ece.getMessage());
 				}
@@ -61,6 +76,7 @@ public class Launcher {
 				try {
 					resultList = dao.search(criteria);
 					console.displayIdentitiesInConsole(resultList);
+					logger.info("Search successful");
 				} catch (final EntitySearchException e) {
 					logger.error(e.getMessage());
 				}
@@ -71,6 +87,7 @@ public class Launcher {
 				try {
 					final Identity updateIdentity = console.readUpdateIdentityFromConsole();
 					dao.update(updateIdentity);
+					logger.info("Updated identity successfully");
 				} catch (EntityUpdateException e) {
 					logger.error(e.getMessage());
 				}
@@ -78,6 +95,13 @@ public class Launcher {
 
 			case "4":
 				// Delete
+				try {
+					final Identity deleteIdentity = console.readDeleteIdentityFromConsole();
+					dao.delete(deleteIdentity);
+					logger.info("Deleted identity successfully");
+				} catch (EntityDeletionException e) {
+					logger.error(e.getMessage());
+				}
 				break;
 
 			case "5":

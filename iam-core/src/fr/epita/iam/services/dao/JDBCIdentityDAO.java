@@ -1,4 +1,4 @@
-package fr.epita.iam.services.identity;
+package fr.epita.iam.services.dao;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.EntityCreationException;
+import fr.epita.iam.exceptions.EntityDeletionException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
+import fr.epita.iam.logger.Logger;
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
@@ -25,7 +25,7 @@ import fr.epita.iam.services.conf.ConfigurationService;
  */
 public class JDBCIdentityDAO implements IdentityDAO {
 
-	private final static Logger logger = Logger.getLogger(JDBCIdentityDAO.class);
+	private final static Logger logger = new Logger(JDBCIdentityDAO.class);
 
 	static {
 		IdentityDAOFactoryDynamicRegistration.registeredDAOs.put(ConfKey.DB_BACKEND.getKey(), new JDBCIdentityDAO());
@@ -74,8 +74,27 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	}
 
 	@Override
-	public void delete(Identity identity) {
+	public void delete(Identity identity) throws EntityDeletionException {
+		Connection connection = null;
 
+		try {
+			connection = getConnection();
+			final PreparedStatement pstmt = connection
+					.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_DELETE_QUERY));
+			pstmt.setString(1, identity.getUid());
+
+			int rowCount = pstmt.executeUpdate();
+			pstmt.close();
+			connection.close();
+			if (rowCount > 0) {
+				logger.info("Deleted identity successfully");
+			} else {
+				logger.error("Delete unsuccessful");
+			}
+
+		} catch (SQLException e) {
+			logger.error("Exception occured while deleting identity", e);
+		}
 	}
 
 	@Override
@@ -179,7 +198,6 @@ public class JDBCIdentityDAO implements IdentityDAO {
 				list.add(identity);
 
 			}
-
 			pstmt.close();
 			connection.close();
 		} catch (final SQLException e) {

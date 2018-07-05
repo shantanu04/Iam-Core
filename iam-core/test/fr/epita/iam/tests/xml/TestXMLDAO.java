@@ -3,8 +3,8 @@ package fr.epita.iam.tests.xml;
 import java.util.List;
 
 import fr.epita.iam.datamodel.Identity;
-import fr.epita.iam.services.identity.IdentityDAO;
-import fr.epita.iam.services.identity.XMLIdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAO;
+import fr.epita.iam.services.dao.XMLIdentityDAO;
 
 /**
  * <h3>Description</h3>

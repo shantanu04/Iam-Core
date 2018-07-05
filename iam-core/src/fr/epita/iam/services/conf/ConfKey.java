@@ -38,7 +38,7 @@ public enum ConfKey {
 	 * The key to search identity
 	 */
 	IDENTITY_SEARCH_QUERY("identity.search"),
-	
+
 	/**
 	 * The key to insert identity
 	 */
@@ -48,22 +48,22 @@ public enum ConfKey {
 	 * The key to update identity
 	 */
 	IDENTITY_UPDATE_QUERY("identity.update"),
-	
+
 	/**
 	 * The key to update displayname
 	 */
 	IDENTITY_UPDATE_DISPLAYNAME_QUERY("identity.update.displayname"),
-	
+
 	/**
 	 * The key to update email
 	 */
 	IDENTITY_UPDATE_EMAIL_QUERY("identity.update.email"),
-	
+
 	/**
-	 * The key to get all identities
+	 * The key to delete identity
 	 */
-	IDENTITY_LIST_QUERY("identity.list"),
-	
+	IDENTITY_DELETE_QUERY("identity.delete"),
+
 	/**
 	 * 
 	 */

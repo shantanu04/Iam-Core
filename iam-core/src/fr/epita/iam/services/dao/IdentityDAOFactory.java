@@ -1,4 +1,4 @@
-package fr.epita.iam.services.identity;
+package fr.epita.iam.services.dao;
 
 import java.util.function.BiPredicate;
 

@@ -1,4 +1,4 @@
-package fr.epita.iam.services.identity;
+package fr.epita.iam.services.dao;
 
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.services.DAO;

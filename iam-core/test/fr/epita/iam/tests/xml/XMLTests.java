@@ -16,8 +16,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import fr.epita.iam.datamodel.Identity;
-import fr.epita.iam.services.identity.IdentityDAO;
-import fr.epita.iam.services.identity.IdentityDAOFactory;
+import fr.epita.iam.services.dao.IdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAOFactory;
 
 /**
  * <h3>Description</h3>

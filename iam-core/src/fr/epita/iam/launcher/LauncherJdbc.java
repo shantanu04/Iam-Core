@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.epita.iam.datamodel.Identity;
-import fr.epita.iam.services.identity.IdentityDAO;
-import fr.epita.iam.services.identity.IdentityDAOFactory;
-import fr.epita.iam.services.identity.JDBCIdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAOFactory;
+import fr.epita.iam.services.dao.JDBCIdentityDAO;
 import fr.epita.iam.ui.ConsoleOperations;
 
 /**
@@ -36,12 +36,12 @@ public class LauncherJdbc {
 
 		// Create
 		final Identity identity = console.readIdentityFromConsole();
-		dao.create(identity);
+		//dao.create(identity);
 
 		// Search?
 		final Identity criteria = console.readCriteriaFromConsole();
-		final List<Identity> resultList = dao.search(criteria);
-		console.displayIdentitiesInConsole(resultList);
+		//final List<Identity> resultList = dao.search(criteria);
+		//console.displayIdentitiesInConsole(resultList);
 
 		// Update
 

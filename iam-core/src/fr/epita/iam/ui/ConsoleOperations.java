@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.datamodel.User;
 
 /**
  * 
@@ -24,6 +25,22 @@ public class ConsoleOperations {
 		System.out.println("Enter your choice: ");
 		String choice = scanner.nextLine();
 		return choice;
+	}
+
+	/**
+	 * 
+	 * @return the user
+	 */
+	public User readUserCredentialsFromConsole() {
+		final User user = new User();
+		System.out.println("Please enter the username: ");
+		String line = scanner.nextLine();
+		user.setUsername(line);
+		System.out.println("Please enter the password: ");
+		line = scanner.nextLine();
+		user.setPasskey(line);
+
+		return user;
 	}
 
 	public Identity readIdentityFromConsole() {
@@ -65,6 +82,16 @@ public class ConsoleOperations {
 		System.out.println("Please input the new email id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
+
+		return identity;
+	}
+
+	public Identity readDeleteIdentityFromConsole() {
+		System.out.println("Enter identity to delete");
+		final Identity identity = new Identity();
+		System.out.println("Please input the Identity UID to delete : ");
+		String line = scanner.nextLine();
+		identity.setUid(line);
 
 		return identity;
 	}

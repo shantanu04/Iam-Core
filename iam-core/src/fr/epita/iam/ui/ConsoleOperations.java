@@ -13,6 +13,7 @@ import fr.epita.iam.datamodel.User;
  */
 public class ConsoleOperations {
 
+	/** The scanner */
 	private final Scanner scanner;
 
 	public ConsoleOperations() {

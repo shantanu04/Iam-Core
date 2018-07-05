@@ -10,10 +10,12 @@ public class User {
 	/** The username */
 	private String username;
 
-	/** The password */
+	/** The passkey */
 	private String passkey;
 
 	/**
+	 * Gets the username
+	 * 
 	 * @return the username
 	 */
 	public String getUsername() {
@@ -21,14 +23,18 @@ public class User {
 	}
 
 	/**
+	 * Sets the username
+	 * 
 	 * @param username
-	 *            the username to set
+	 *            the username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	/**
+	 * Gets the passkey
+	 * 
 	 * @return the passkey
 	 */
 	public String getPasskey() {
@@ -36,15 +42,17 @@ public class User {
 	}
 
 	/**
+	 * Sets the passkey
+	 * 
 	 * @param passkey
-	 *            the passkey to set
+	 *            the passkey
 	 */
 	public void setPasskey(String passkey) {
 		this.passkey = passkey;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * This method prints user details
 	 * 
 	 * @see java.lang.Object#toString()
 	 */

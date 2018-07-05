@@ -37,7 +37,7 @@ public class Launcher {
 		}
 		final ConsoleOperations console = new ConsoleOperations();
 		// Welcome
-		System.out.println("\n Welcome to Identity Access Management System..!! \n\n");
+		System.out.println("\nWelcome to Identity Access Management System \n\n");
 
 		// Authentication
 		User userLogin = console.readUserCredentialsFromConsole();
@@ -46,6 +46,7 @@ public class Launcher {
 
 		if (!isValid) {
 			System.out.println("You have entered wrong credentials. Please try again.");
+			logger.error("Authentication failed");
 			return;
 		} else {
 			System.out.println("Authentication successful");
@@ -106,7 +107,7 @@ public class Launcher {
 
 			case "5":
 				proceed = false;
-				logger.error("Exiting...");
+				logger.info("Exiting...");
 				break;
 			default:
 				logger.error("Invalid choice.");

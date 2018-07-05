@@ -93,6 +93,14 @@ public class JDBCIdentityDAO implements IdentityDAO {
 			}
 
 		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (final SQLException e1) {
+					logger.error("SQL Exception occured while identity deletion", e1);
+				}
+			}
+			final EntityDeletionException exception = new EntityDeletionException(identity, e);
 			logger.error("Exception occured while deleting identity", e);
 		}
 	}

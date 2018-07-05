@@ -14,6 +14,8 @@ public class Identity {
 	private Map<String, String> attributes;
 
 	/**
+	 * The contructor
+	 * 
 	 * @param displayName
 	 * @param uid
 	 * @param email
@@ -32,6 +34,8 @@ public class Identity {
 	}
 
 	/**
+	 * Gets the display name
+	 * 
 	 * @return the displayName
 	 */
 	public String getDisplayName() {
@@ -39,14 +43,18 @@ public class Identity {
 	}
 
 	/**
+	 * Sets the display name
+	 * 
 	 * @param displayName
-	 *            the displayName to set
+	 *            the displayName
 	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
 
 	/**
+	 * Gets the UID
+	 * 
 	 * @return the uid
 	 */
 	public String getUid() {
@@ -54,14 +62,18 @@ public class Identity {
 	}
 
 	/**
+	 * Sets the UID
+	 * 
 	 * @param uid
-	 *            the uid to set
+	 *            the uid
 	 */
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
 
 	/**
+	 * Gets the email
+	 * 
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -69,14 +81,18 @@ public class Identity {
 	}
 
 	/**
+	 * Sets the email
+	 * 
 	 * @param email
-	 *            the email to set
+	 *            the email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
 	/**
+	 * Gets the attributes
+	 * 
 	 * @return the attributes
 	 */
 	public Map<String, String> getAttributes() {
@@ -84,20 +100,24 @@ public class Identity {
 	}
 
 	/**
+	 * Sets the attributes
+	 * 
 	 * @param attributes
-	 *            the attributes to set
+	 *            the attributes
 	 */
 	public void setAttributes(Map<String, String> attributes) {
 		this.attributes = attributes;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * This method prints the identity details
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Identity [displayName=" + displayName + ", uid=" + uid + ", email=" + email + ", attributes=" + attributes + "]";
+		return "Identity [displayName=" + displayName + ", uid=" + uid + ", email=" + email + ", attributes="
+				+ attributes + "]";
 	}
 
 }

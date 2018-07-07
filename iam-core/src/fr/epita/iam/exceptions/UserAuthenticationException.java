@@ -3,13 +3,14 @@ package fr.epita.iam.exceptions;
 /**
  * <h3>Description</h3>
  * <p>
- * This class is an exception class, used in case of error in searching entity.
+ * This class is an exception class, used in case of error in user
+ * authentication.
  * </p>
  * 
  * @author Shantanu Kamble
  *
  */
-public class EntitySearchException extends Exception {
+public class UserAuthenticationException extends Exception {
 
 	/** The Object entity */
 	private Object entity;
@@ -20,7 +21,7 @@ public class EntitySearchException extends Exception {
 	 * @param entity
 	 * @param cause
 	 */
-	public EntitySearchException(Object entity, Throwable cause) {
+	public UserAuthenticationException(Object entity, Throwable cause) {
 		this.entity = entity;
 		initCause(cause);
 	}
@@ -31,6 +32,7 @@ public class EntitySearchException extends Exception {
 	 * @return
 	 */
 	public String getUserMessage() {
-		return "The following entity search has failed :" + entity.toString();
+		return "The following user authentication has failed :" + entity.toString();
 	}
+
 }

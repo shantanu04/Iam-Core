@@ -19,19 +19,26 @@ import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class provides implementation of all the CRUD operations related to the
+ * identity data model.
+ * </p>
  * 
  * @author Shantanu Kamble
  *
  */
 public class JDBCIdentityDAO implements IdentityDAO {
 
+	/** The logger */
 	private final static Logger logger = new Logger(JDBCIdentityDAO.class);
 
-	static {
-		IdentityDAOFactoryDynamicRegistration.registeredDAOs.put(ConfKey.DB_BACKEND.getKey(), new JDBCIdentityDAO());
-
-	}
-
+	/**
+	 * Gets the database connection
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	private static Connection getConnection() throws SQLException {
 		// Given this context
 		final String url = ConfigurationService.getProperty(ConfKey.DB_URL);
@@ -45,6 +52,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	}
 
+	/**
+	 * This method will create the identity in the database
+	 */
 	@Override
 	public void create(Identity identity) throws EntityCreationException {
 		Connection connection = null;
@@ -73,6 +83,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		}
 	}
 
+	/**
+	 * This method will delete the identity from the database
+	 */
 	@Override
 	public void delete(Identity identity) throws EntityDeletionException {
 		Connection connection = null;
@@ -105,6 +118,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		}
 	}
 
+	/**
+	 * This method will update the identity in the database
+	 */
 	@Override
 	public void update(Identity identity) throws EntityUpdateException {
 		Connection connection = null;
@@ -131,6 +147,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		}
 	}
 
+	/**
+	 * This method will assemble the update query
+	 */
 	private String assembleUpdateQuery(Identity identity) {
 		String sqlString = "";
 		if (identity.getDisplayName() != null && !identity.getDisplayName().isEmpty() && identity.getEmail() != null
@@ -178,6 +197,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		return statement;
 	}
 
+	/**
+	 * This method gets identity by Id
+	 */
 	@Override
 	public Identity getById(Serializable id) {
 		final Identity identity = new Identity();
@@ -185,6 +207,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		return identity;
 	}
 
+	/**
+	 * This method will search the identity in the database
+	 */
 	@Override
 	public List<Identity> search(Identity criteria) throws EntitySearchException {
 		final List<Identity> list = new ArrayList<>();
@@ -225,10 +250,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		return list;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * This method will perform the health check
 	 * 
-	 * @see fr.epita.iam.services.IdentityDAO#healthCheck()
+	 * @return true if health check is successful or else false
 	 */
 	@Override
 	public boolean healthCheck() {

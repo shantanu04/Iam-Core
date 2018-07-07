@@ -10,6 +10,7 @@ import fr.epita.iam.exceptions.EntityCreationException;
 import fr.epita.iam.exceptions.EntityDeletionException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
+import fr.epita.iam.exceptions.UserAuthenticationException;
 import fr.epita.iam.logger.Logger;
 import fr.epita.iam.services.dao.IdentityDAO;
 import fr.epita.iam.services.dao.IdentityDAOFactory;
@@ -17,6 +18,10 @@ import fr.epita.iam.services.dao.JDBCUserDAO;
 import fr.epita.iam.ui.ConsoleOperations;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is used to launch the application.
+ * </p>
  * 
  * @author Shantanu Kamble
  *
@@ -28,6 +33,7 @@ public class Launcher {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// initialize resources
 		IdentityDAO dao = null;
+
 		try {
 			dao = IdentityDAOFactory.getDAO();
 		} catch (final Exception e) {
@@ -42,14 +48,22 @@ public class Launcher {
 		// Authentication
 		User userLogin = console.readUserCredentialsFromConsole();
 		JDBCUserDAO userDao = new JDBCUserDAO();
-		boolean isValid = userDao.checkLogin(userLogin);
+		boolean isValid;
+		try {
+			isValid = userDao.checkLogin(userLogin);
 
-		if (!isValid) {
-			System.out.println("You have entered wrong credentials. Please try again.");
-			logger.error("Authentication failed");
+			if (!isValid) {
+				System.out.println("You have entered wrong credentials. Please try again.");
+				logger.error("Authentication failed");
+				return;
+			} else {
+				System.out.println("Authentication successful");
+				logger.info("User authenticated successfully");
+			}
+		} catch (UserAuthenticationException userAuthEx) {
+			System.out.println("Some exception occured");
+			logger.error(userAuthEx.getMessage());
 			return;
-		} else {
-			System.out.println("Authentication successful");
 		}
 
 		// Menu

@@ -1,6 +1,10 @@
 package fr.epita.iam.exceptions;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is an exception class, used in case of error in reading an entity.
+ * </p>
  * 
  * @author Shantanu Kamble
  *

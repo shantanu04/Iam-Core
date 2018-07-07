@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is used to generate and write logs to a logging file.
+ * </p>
  * 
  * @author Shantanu Kamble
  *
@@ -39,24 +43,48 @@ public class Logger {
 		}
 	}
 
+	/**
+	 * The constructor
+	 * 
+	 * @param classe
+	 */
 	public Logger(Class<?> classe) {
 		this.classe = classe;
 	}
 
+	/**
+	 * Method for error logs
+	 * 
+	 * @param message
+	 */
 	public void error(String message) {
 		printMessage(message, "ERROR");
 	}
 
+	/**
+	 * Method for info logs
+	 * 
+	 * @param message
+	 */
 	public void info(String message) {
 		printMessage(message, "INFO");
 	}
 
+	/**
+	 * This method prints the message
+	 * 
+	 * @param message
+	 * @param level
+	 */
 	private void printMessage(String message, String level) {
 		String completeMessage = getTimeStamp() + " - " + level + " - " + classe.getCanonicalName() + " " + message;
 		printWriter.println(completeMessage);
 		printWriter.flush();
 	}
 
+	/**
+	 * @return
+	 */
 	private static String getTimeStamp() {
 		Date date = new Date();
 
@@ -64,6 +92,10 @@ public class Logger {
 		return sdf.format(date);
 	}
 
+	/**
+	 * @param message
+	 * @param e
+	 */
 	public void error(String message, Exception e) {
 		printMessage(message, "ERROR");
 		e.printStackTrace(printWriter);

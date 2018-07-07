@@ -7,6 +7,10 @@ import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.datamodel.User;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class contains all the console related operations.
+ * </p>
  * 
  * @author Shantanu Kamble
  *
@@ -16,10 +20,18 @@ public class ConsoleOperations {
 	/** The scanner */
 	private final Scanner scanner;
 
+	/**
+	 * The constructor
+	 */
 	public ConsoleOperations() {
 		scanner = new Scanner(System.in);
 	}
 
+	/**
+	 * This method is used to read user choice from console
+	 * 
+	 * @return
+	 */
 	public String readChoiceFromConsole() {
 		System.out.println("\n\n<-----MENU----->");
 		System.out.println("1) Create \n2)Search \n3)Update \n4)Delete \n5) Exit");
@@ -29,6 +41,7 @@ public class ConsoleOperations {
 	}
 
 	/**
+	 * This method is used to read user credentials from console
 	 * 
 	 * @return the user
 	 */
@@ -44,6 +57,11 @@ public class ConsoleOperations {
 		return user;
 	}
 
+	/**
+	 * This method is used to read identity details from console
+	 * 
+	 * @return the identity
+	 */
 	public Identity readIdentityFromConsole() {
 		final Identity identity = new Identity();
 		System.out.println("Please input the display name : ");
@@ -58,6 +76,11 @@ public class ConsoleOperations {
 		return identity;
 	}
 
+	/**
+	 * This method is used to read search criteria from console
+	 * 
+	 * @return the identity
+	 */
 	public Identity readCriteriaFromConsole() {
 		System.out.println("Enter criteria");
 		final Identity identity = new Identity();
@@ -71,6 +94,11 @@ public class ConsoleOperations {
 		return identity;
 	}
 
+	/**
+	 * This method is used to read updated identity details from console
+	 * 
+	 * @return the identity
+	 */
 	public Identity readUpdateIdentityFromConsole() {
 		System.out.println("Enter identity to update");
 		final Identity identity = new Identity();
@@ -87,6 +115,11 @@ public class ConsoleOperations {
 		return identity;
 	}
 
+	/**
+	 * This method is used to read delete identity details from console
+	 * 
+	 * @return the identity
+	 */
 	public Identity readDeleteIdentityFromConsole() {
 		System.out.println("Enter identity to delete");
 		final Identity identity = new Identity();
@@ -97,6 +130,11 @@ public class ConsoleOperations {
 		return identity;
 	}
 
+	/**
+	 * This method is used to display identity details in console
+	 * 
+	 * @param identities
+	 */
 	public void displayIdentitiesInConsole(List<Identity> identities) {
 		// check if list is empty
 		if (identities.size() == 0) {
@@ -110,6 +148,9 @@ public class ConsoleOperations {
 		}
 	}
 
+	/**
+	 * This method is used to release resources
+	 */
 	public void releaseResources() {
 		scanner.close();
 	}

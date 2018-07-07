@@ -11,18 +11,56 @@ import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This is a DAO interface.
+ * </p>
  * 
+ * @author Shantanu Kamble
+ *
  */
 public interface DAO<T> {
 
+	/**
+	 * Method to create entity
+	 * 
+	 * @param entity
+	 * @throws EntityCreationException
+	 */
 	public void create(T entity) throws EntityCreationException;
 
+	/**
+	 * Method to delete entity
+	 * 
+	 * @param entity
+	 * @throws EntityDeletionException
+	 */
 	public void delete(T entity) throws EntityDeletionException;
 
+	/**
+	 * Method to update entity
+	 * 
+	 * @param entity
+	 * @throws EntityUpdateException
+	 */
 	public void update(T entity) throws EntityUpdateException;
 
+	/**
+	 * Method to get entity by Id
+	 * 
+	 * @param id
+	 * @return
+	 * @throws EntityReadException
+	 */
 	public Identity getById(Serializable id) throws EntityReadException;
 
+	/**
+	 * Method to search entity
+	 * 
+	 * @param criteria
+	 * @return
+	 * @throws EntitySearchException
+	 */
 	public List<Identity> search(T criteria) throws EntitySearchException;
 
 }

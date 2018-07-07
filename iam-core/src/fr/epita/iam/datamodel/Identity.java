@@ -3,6 +3,10 @@ package fr.epita.iam.datamodel;
 import java.util.Map;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is a data model class for identity.
+ * </p>
  * 
  * @author Shantanu Kamble
  *

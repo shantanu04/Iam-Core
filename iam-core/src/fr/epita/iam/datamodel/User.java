@@ -1,6 +1,10 @@
 package fr.epita.iam.datamodel;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is a data model class for user.
+ * </p>
  * 
  * @author Shantanu Kamble
  *

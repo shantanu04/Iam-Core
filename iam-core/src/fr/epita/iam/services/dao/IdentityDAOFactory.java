@@ -1,20 +1,28 @@
 package fr.epita.iam.services.dao;
 
-import java.util.function.BiPredicate;
-
-import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is a factory class used to register the DAOs.
+ * </p>
+ * 
+ * @author Shantanu Kamble
  *
  */
 public class IdentityDAOFactory {
 
+	/** The current instance */
 	private static IdentityDAO currentInstance;
 
-	private static boolean fallbackActivated;
-
+	/**
+	 * This method is used to get instance of identityDAO
+	 * 
+	 * @return the identityDAO instance
+	 * @throws Exception
+	 */
 	public static IdentityDAO getDAO() throws Exception {
 		final String backendMode = ConfigurationService.getProperty(ConfKey.BACKEND_MODE);
 
@@ -22,40 +30,16 @@ public class IdentityDAOFactory {
 
 			currentInstance = getInstance(backendMode);
 		}
-		if (currentInstance != null && !currentInstance.healthCheck()) {
-			fallbackActivated = true;
-			final String fallbackMode = ConfigurationService.getProperty(ConfKey.FALLBACK_BACKEND_MODE);
-			currentInstance = getInstance(fallbackMode);
-		}
 
 		return currentInstance;
 	}
 
 	/**
-	 * <h3>Description</h3>
-	 * <p>
-	 * This methods allows to ...
-	 * </p>
-	 *
-	 * <h3>Usage</h3>
-	 * <p>
-	 * It should be used as follows :
-	 *
-	 * <pre>
-	 * <code> ${enclosing_type} sample;
-	 *
-	 * //...
-	 *
-	 * sample.${enclosing_method}();
-	 *</code>
-	 * </pre>
-	 * </p>
-	 *
-	 * @since $${version}
-	 * @see Voir aussi $${link}
-	 * @author ${user}
-	 *
-	 *         ${tags}
+	 * This method is used to get the instance of the identityDAO implementation
+	 * 
+	 * @param backendMode
+	 * @return
+	 * @throws Exception
 	 */
 	private static IdentityDAO getInstance(final String backendMode) throws Exception {
 		IdentityDAO instance = null;
@@ -63,23 +47,7 @@ public class IdentityDAOFactory {
 		case "db":
 			instance = new JDBCIdentityDAO();
 			break;
-		case "file":
-			try {
-				instance = new FileIdentityDAO(new BiPredicate<Identity, Identity>() {
 
-					@Override
-					public boolean test(Identity identity1, Identity identity2) {
-						return identity1.getEmail().startsWith(identity2.getEmail())
-								|| identity1.getDisplayName().startsWith(identity2.getDisplayName());
-					}
-				});
-			} catch (final Exception e) {
-				// TODO log
-			}
-			break;
-		case "xml":
-			instance = new XMLIdentityDAO();
-			break;
 		default:
 			throw new Exception("not implemented yet");
 		}

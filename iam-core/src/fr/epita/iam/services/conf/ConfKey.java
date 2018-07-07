@@ -1,17 +1,24 @@
 package fr.epita.iam.services.conf;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This enum contains all the keys required for configuration.
+ * </p>
+ * 
+ * @author Shantanu Kamble
  *
  */
 public enum ConfKey {
+
 	/**
 	 * The key to choose the backend mode
 	 */
 	BACKEND_MODE("backend.mode"),
+
 	/**
 	 * The key to choose the fall back backend mode
 	 */
-
 	FALLBACK_BACKEND_MODE("backend.mode"),
 
 	/**
@@ -69,15 +76,21 @@ public enum ConfKey {
 	 */
 	XML_BACKEND_FILE("xml.file");
 
+	/** The key */
 	private String key;
 
 	/**
-	 *
+	 * The constructor
 	 */
 	private ConfKey(String key) {
 		this.key = key;
 	}
 
+	/**
+	 * Gets the key
+	 * 
+	 * @return the string value of the key
+	 */
 	public String getKey() {
 		return key;
 	}

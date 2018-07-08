@@ -26,7 +26,7 @@ public class IdentityDAOFactory {
 	 * This method is used to get instance of identityDAO
 	 * 
 	 * @return the identityDAO instance
-	 * @throws Exception
+	 * @throws JDBCInitException
 	 */
 	public static IdentityDAO getDAO() throws JDBCInitException {
 		final String backendMode = ConfigurationService.getProperty(ConfKey.BACKEND_MODE);

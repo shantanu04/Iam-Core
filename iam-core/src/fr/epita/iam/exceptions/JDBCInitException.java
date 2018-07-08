@@ -18,7 +18,6 @@ public class JDBCInitException extends Exception {
 	 * The constructor
 	 * 
 	 * @param entity
-	 * @param cause
 	 */
 	public JDBCInitException(Object entity) {
 		this.entity = entity;

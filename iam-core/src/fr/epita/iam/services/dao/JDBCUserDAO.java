@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epita.iam.datamodel.User;
 import fr.epita.iam.exceptions.UserAuthenticationException;
-import fr.epita.iam.logger.Logger;
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
@@ -24,7 +26,7 @@ import fr.epita.iam.services.conf.ConfigurationService;
 public class JDBCUserDAO implements UserDAO {
 
 	/** The logger */
-	private final static Logger logger = new Logger(JDBCUserDAO.class);
+	private final static Logger logger = LogManager.getLogger(JDBCUserDAO.class);
 
 	/**
 	 * Gets the database connection
@@ -97,7 +99,6 @@ public class JDBCUserDAO implements UserDAO {
 			return true;
 		} catch (final SQLException sqle) {
 			logger.error("SQL Exception occured while performing health check", sqle);
-
 		}
 		return false;
 

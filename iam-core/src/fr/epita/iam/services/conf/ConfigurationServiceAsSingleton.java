@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * <h3>Description</h3>
  * <p>
@@ -16,6 +19,9 @@ import java.util.Properties;
  *
  */
 public class ConfigurationServiceAsSingleton {
+
+	/** The logger */
+	private final static Logger logger = LogManager.getLogger(ConfigurationServiceAsSingleton.class);
 
 	/** The properties */
 	private final Properties properties;
@@ -44,11 +50,9 @@ public class ConfigurationServiceAsSingleton {
 			try {
 				instance = new ConfigurationServiceAsSingleton();
 			} catch (final FileNotFoundException e) {
-				// FIXME Use a logger to trace the following error
-				// LOGGER.error("An error occured", ${exception_var})
+				logger.error("Configuration file was not found.");
 			} catch (final IOException e) {
-				// FIXME Use a logger to trace the following error
-				// LOGGER.error("An error occured", ${exception_var})
+				logger.error("Input output exception occured.");
 			}
 		}
 		return instance;

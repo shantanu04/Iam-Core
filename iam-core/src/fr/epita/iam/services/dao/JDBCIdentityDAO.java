@@ -9,13 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.EntityCreationException;
 import fr.epita.iam.exceptions.EntityDeletionException;
 import fr.epita.iam.exceptions.EntityReadException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
-import fr.epita.iam.logger.Logger;
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
@@ -32,7 +34,7 @@ import fr.epita.iam.services.conf.ConfigurationService;
 public class JDBCIdentityDAO implements IdentityDAO {
 
 	/** The logger */
-	private final static Logger logger = new Logger(JDBCIdentityDAO.class);
+	private final static Logger logger = LogManager.getLogger(JDBCIdentityDAO.class);
 
 	/**
 	 * Gets the database connection

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * <h3>Description</h3>
  * <p>
@@ -14,6 +17,9 @@ import java.util.Properties;
  *
  */
 public class ConfigurationService {
+
+	/** The logger */
+	private final static Logger logger = LogManager.getLogger(ConfigurationService.class);
 
 	/** The constant backend mode */
 	public static final String BACKEND_MODE = "backend.mode";
@@ -42,7 +48,7 @@ public class ConfigurationService {
 			properties = new Properties();
 			properties.load(new FileInputStream(new File(System.getProperty("conf.file.path"))));
 		} catch (final Exception e) {
-			// TODO treat exception
+			logger.error("Exception occured while initialising properties");
 		}
 
 	}

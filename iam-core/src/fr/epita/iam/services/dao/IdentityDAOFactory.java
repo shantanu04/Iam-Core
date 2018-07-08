@@ -2,7 +2,6 @@ package fr.epita.iam.services.dao;
 
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
-import fr.epita.iam.services.dao.JDBCIdentityDAO;
 
 /**
  * <h3>Description</h3>
@@ -28,7 +27,6 @@ public class IdentityDAOFactory {
 		final String backendMode = ConfigurationService.getProperty(ConfKey.BACKEND_MODE);
 
 		if (currentInstance == null) {
-
 			currentInstance = getInstance(backendMode);
 		}
 

@@ -4,5 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.11.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

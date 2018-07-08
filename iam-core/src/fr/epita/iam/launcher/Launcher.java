@@ -1,8 +1,9 @@
 package fr.epita.iam.launcher;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.datamodel.User;
@@ -11,7 +12,6 @@ import fr.epita.iam.exceptions.EntityDeletionException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
 import fr.epita.iam.exceptions.UserAuthenticationException;
-import fr.epita.iam.logger.Logger;
 import fr.epita.iam.services.dao.IdentityDAO;
 import fr.epita.iam.services.dao.IdentityDAOFactory;
 import fr.epita.iam.services.dao.JDBCUserDAO;
@@ -28,9 +28,9 @@ import fr.epita.iam.ui.ConsoleOperations;
  */
 public class Launcher {
 
-	private final static Logger logger = new Logger(Launcher.class);
+	private final static Logger logger = LogManager.getLogger(Launcher.class);
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) {
 		// initialize resources
 		IdentityDAO dao = null;
 
@@ -38,10 +38,10 @@ public class Launcher {
 			dao = IdentityDAOFactory.getDAO();
 		} catch (final Exception e) {
 			logger.error("Error while getting dao", e);
-
 			return;
 		}
 		final ConsoleOperations console = new ConsoleOperations();
+
 		// Welcome
 		System.out.println("\nWelcome to Identity Access Management System \n\n");
 
@@ -121,7 +121,6 @@ public class Launcher {
 
 			case "5":
 				proceed = false;
-				System.out.println("\nExiting..");
 				logger.info("Exiting...");
 				break;
 			default:

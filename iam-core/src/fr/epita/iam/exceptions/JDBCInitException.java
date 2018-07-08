@@ -3,13 +3,13 @@ package fr.epita.iam.exceptions;
 /**
  * <h3>Description</h3>
  * <p>
- * This class is an exception class, used in case of error in entity deletion.
+ * This class is an exception class, used in case of error in intializing jdbc.
  * </p>
  * 
  * @author Shantanu Kamble
  *
  */
-public class EntityDeletionException extends Exception {
+public class JDBCInitException extends Exception {
 
 	/** The Object entity */
 	private final Object entity;
@@ -20,18 +20,17 @@ public class EntityDeletionException extends Exception {
 	 * @param entity
 	 * @param cause
 	 */
-	public EntityDeletionException(Object entity, Throwable cause) {
+	public JDBCInitException(Object entity) {
 		this.entity = entity;
-		initCause(cause);
 	}
 
 	/**
 	 * This method gets the user message
 	 * 
-	 * @return
+	 * @return the user message
 	 */
 	public String getUserMessage() {
-		return "The following entity deletion has failed :" + entity.toString();
+		return "The jdbc init has failed :" + entity.toString();
 	}
 
 }

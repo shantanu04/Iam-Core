@@ -72,9 +72,9 @@ public enum ConfKey {
 	IDENTITY_DELETE_QUERY("identity.delete"),
 
 	/**
-	 * 
+	 * The key to retrieve user
 	 */
-	XML_BACKEND_FILE("xml.file");
+	USER_RETRIEVE_QUERY("user.retrieve");
 
 	/** The key */
 	private String key;

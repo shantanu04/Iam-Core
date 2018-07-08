@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class ConfigurationServiceAsSingleton {
 
 	/** The logger */
-	private final static Logger logger = LogManager.getLogger(ConfigurationServiceAsSingleton.class);
+	private static final Logger logger = LogManager.getLogger(ConfigurationServiceAsSingleton.class);
 
 	/** The properties */
 	private final Properties properties;
@@ -35,7 +35,7 @@ public class ConfigurationServiceAsSingleton {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private ConfigurationServiceAsSingleton() throws FileNotFoundException, IOException {
+	private ConfigurationServiceAsSingleton() throws IOException {
 		properties = new Properties();
 		properties.load(new FileInputStream(new File(System.getProperty("conf.file.path"))));
 	}

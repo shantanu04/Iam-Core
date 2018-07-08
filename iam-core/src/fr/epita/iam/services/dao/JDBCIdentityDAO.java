@@ -1,6 +1,5 @@
 package fr.epita.iam.services.dao;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.EntityCreationException;
 import fr.epita.iam.exceptions.EntityDeletionException;
-import fr.epita.iam.exceptions.EntityReadException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
 import fr.epita.iam.services.conf.ConfKey;
@@ -34,7 +32,7 @@ import fr.epita.iam.services.conf.ConfigurationService;
 public class JDBCIdentityDAO implements IdentityDAO {
 
 	/** The logger */
-	private final static Logger logger = LogManager.getLogger(JDBCIdentityDAO.class);
+	private static final Logger logger = LogManager.getLogger(JDBCIdentityDAO.class);
 
 	/**
 	 * Gets the database connection
@@ -65,10 +63,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	@Override
 	public void create(Identity identity) throws EntityCreationException {
 		Connection connection = null;
+		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			final PreparedStatement pstmt = connection
-					.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_INSERT_QUERY));
+			pstmt = connection.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_INSERT_QUERY));
 
 			pstmt.setString(1, identity.getDisplayName());
 			pstmt.setString(2, identity.getEmail());
@@ -77,16 +75,20 @@ public class JDBCIdentityDAO implements IdentityDAO {
 			pstmt.close();
 			connection.close();
 		} catch (final SQLException e) {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (final SQLException e1) {
-					logger.error("SQL Exception occured while identity creation", e1);
-				}
-			}
 			final EntityCreationException exception = new EntityCreationException(identity, e);
 			logger.error("Exception occured while identity creation", exception);
 			throw exception;
+		} finally {
+			try {
+				if (null != connection) {
+					connection.close();
+				}
+				if (null != pstmt) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				logger.error("Exception occured while closing connection", e);
+			}
 		}
 	}
 
@@ -100,16 +102,14 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	@Override
 	public void delete(Identity identity) throws EntityDeletionException {
 		Connection connection = null;
-
+		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			final PreparedStatement pstmt = connection
-					.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_DELETE_QUERY));
+			pstmt = connection.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_DELETE_QUERY));
 			pstmt.setString(1, identity.getUid());
 
 			int rowCount = pstmt.executeUpdate();
-			pstmt.close();
-			connection.close();
+
 			if (rowCount > 0) {
 				logger.info("Deleted identity successfully");
 			} else {
@@ -117,15 +117,20 @@ public class JDBCIdentityDAO implements IdentityDAO {
 			}
 
 		} catch (SQLException e) {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (final SQLException e1) {
-					logger.error("SQL Exception occured while identity deletion", e1);
-				}
-			}
 			final EntityDeletionException exception = new EntityDeletionException(identity, e);
-			logger.error("Exception occured while deleting identity", e);
+			logger.error("Exception occured while deleting identity", exception);
+		} finally {
+			try {
+				if (null != connection) {
+					connection.close();
+				}
+				if (null != pstmt) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				logger.error("Exception occured while closing connection", e);
+			}
+
 		}
 	}
 
@@ -139,9 +144,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	@Override
 	public void update(Identity identity) throws EntityUpdateException {
 		Connection connection = null;
+		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(assembleUpdateQuery(identity));
+			pstmt = connection.prepareStatement(assembleUpdateQuery(identity));
 
 			pstmt = assemblePreparedStatement(pstmt, identity);
 
@@ -149,16 +155,21 @@ public class JDBCIdentityDAO implements IdentityDAO {
 			pstmt.close();
 			connection.close();
 		} catch (final SQLException e) {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (final SQLException e1) {
-					logger.error("SQL Exception occured while identity updation", e1);
-				}
-			}
 			final EntityUpdateException exception = new EntityUpdateException(identity, e);
 			logger.error("Exception occured while identity updation", e);
 			throw exception;
+		} finally {
+			try {
+				if (null != connection) {
+					connection.close();
+				}
+				if (null != pstmt) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				logger.error("Exception occured while closing connection", e);
+			}
+
 		}
 	}
 
@@ -216,20 +227,6 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	}
 
 	/**
-	 * This method gets identity by Id
-	 * 
-	 * @param id
-	 * @return the identity
-	 * @throws EntityReadException
-	 */
-	@Override
-	public Identity getById(Serializable id) throws EntityReadException {
-		final Identity identity = new Identity();
-
-		return identity;
-	}
-
-	/**
 	 * This method will search the identity in the database
 	 * 
 	 * @param criteria
@@ -241,14 +238,14 @@ public class JDBCIdentityDAO implements IdentityDAO {
 		final List<Identity> list = new ArrayList<>();
 
 		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			final PreparedStatement pstmt = connection
-					.prepareStatement("select IDENTITY_DISPLAYNAME, IDENTITY_EMAIL, IDENTITY_UID from IDENTITIES"
-							+ " where IDENTITY_DISPLAYNAME like ? or IDENTITY_EMAIL like ?");
+			pstmt = connection.prepareStatement(ConfigurationService.getProperty(ConfKey.IDENTITY_SEARCH_QUERY));
 			pstmt.setString(1, "%" + criteria.getDisplayName() + "%");
 			pstmt.setString(2, "%" + criteria.getEmail() + "%");
-			final ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				final String displayName = rs.getString("IDENTITY_DISPLAYNAME");
 				final String email = rs.getString("IDENTITY_EMAIL");
@@ -257,21 +254,25 @@ public class JDBCIdentityDAO implements IdentityDAO {
 				list.add(identity);
 
 			}
-			pstmt.close();
-			connection.close();
 		} catch (final SQLException e) {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (final SQLException e2) {
-					EntitySearchException searchException = new EntitySearchException(criteria, e2);
-					logger.error("SQL Exception occured while searching identity", e2);
-					throw searchException;
-				}
-			}
 			final EntitySearchException exception = new EntitySearchException(criteria, e);
 			logger.error("Exception occured while searching identity", e);
 			throw exception;
+		} finally {
+			try {
+				if (null != connection) {
+					connection.close();
+				}
+				if (null != pstmt) {
+					pstmt.close();
+				}
+				if (null != rs) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				logger.error("Exception occured while closing connection", e);
+			}
+
 		}
 		return list;
 	}
@@ -289,7 +290,6 @@ public class JDBCIdentityDAO implements IdentityDAO {
 			return true;
 		} catch (final SQLException sqle) {
 			logger.error("SQL Exception occured while performing health check", sqle);
-
 		}
 		return false;
 

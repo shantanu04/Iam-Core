@@ -12,7 +12,7 @@ package fr.epita.iam.exceptions;
 public class EntityCreationException extends Exception {
 
 	/** The Object entity */
-	private Object entity;
+	private final Object entity;
 
 	/**
 	 * The constructor

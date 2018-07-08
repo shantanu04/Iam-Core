@@ -18,8 +18,15 @@ import org.apache.logging.log4j.Logger;
  */
 public class ConfigurationService {
 
+	/**
+	 * Private constructor
+	 */
+	private ConfigurationService() {
+		// Private constructor
+	}
+
 	/** The logger */
-	private final static Logger logger = LogManager.getLogger(ConfigurationService.class);
+	private static final Logger logger = LogManager.getLogger(ConfigurationService.class);
 
 	/** The constant backend mode */
 	public static final String BACKEND_MODE = "backend.mode";

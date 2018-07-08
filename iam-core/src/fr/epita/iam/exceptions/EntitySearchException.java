@@ -12,7 +12,7 @@ package fr.epita.iam.exceptions;
 public class EntitySearchException extends Exception {
 
 	/** The Object entity */
-	private Object entity;
+	private final Object entity;
 
 	/**
 	 * The constructor

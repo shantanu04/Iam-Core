@@ -1,12 +1,10 @@
 package fr.epita.iam.services;
 
-import java.io.Serializable;
 import java.util.List;
 
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.EntityCreationException;
 import fr.epita.iam.exceptions.EntityDeletionException;
-import fr.epita.iam.exceptions.EntityReadException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
 
@@ -44,15 +42,6 @@ public interface DAO<T> {
 	 * @throws EntityUpdateException
 	 */
 	public void update(T entity) throws EntityUpdateException;
-
-	/**
-	 * Method to get entity by Id
-	 * 
-	 * @param id
-	 * @return the identity
-	 * @throws EntityReadException
-	 */
-	public Identity getById(Serializable id) throws EntityReadException;
 
 	/**
 	 * Method to search entity

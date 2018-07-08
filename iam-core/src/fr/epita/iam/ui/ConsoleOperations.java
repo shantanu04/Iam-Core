@@ -36,8 +36,7 @@ public class ConsoleOperations {
 		System.out.println("\n\n<-----MENU----->");
 		System.out.println("1) Create \n2)Search \n3)Update \n4)Delete \n5) Exit");
 		System.out.println("Enter your choice: ");
-		String choice = scanner.nextLine();
-		return choice;
+		return scanner.nextLine();
 	}
 
 	/**
@@ -137,7 +136,7 @@ public class ConsoleOperations {
 	 */
 	public void displayIdentitiesInConsole(List<Identity> identities) {
 		// check if list is empty
-		if (identities.size() == 0) {
+		if (identities.isEmpty()) {
 			System.out.println("No elements in the identity list.");
 		}
 

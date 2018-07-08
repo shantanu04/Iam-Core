@@ -26,7 +26,7 @@ import fr.epita.iam.services.conf.ConfigurationService;
 public class JDBCUserDAO implements UserDAO {
 
 	/** The logger */
-	private final static Logger logger = LogManager.getLogger(JDBCUserDAO.class);
+	private static final Logger logger = LogManager.getLogger(JDBCUserDAO.class);
 
 	/**
 	 * Gets the database connection
@@ -55,14 +55,15 @@ public class JDBCUserDAO implements UserDAO {
 	 */
 	public boolean checkLogin(User userLogin) throws UserAuthenticationException {
 		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			final PreparedStatement pstmt = conn
-					.prepareStatement("SELECT * FROM USERS WHERE USER_USERNAME =? AND USER_PWD=?");
+			pstmt = conn.prepareStatement(ConfigurationService.getProperty(ConfKey.USER_RETRIEVE_QUERY));
 
 			pstmt.setString(1, userLogin.getUsername());
 			pstmt.setString(2, userLogin.getPasskey());
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				logger.info("Login success");
 				return true;
@@ -71,16 +72,24 @@ public class JDBCUserDAO implements UserDAO {
 			}
 
 		} catch (SQLException e) {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (final SQLException sqlEx) {
-					logger.error("SQL Exception occured while user authentication", sqlEx);
-				}
-			}
 			final UserAuthenticationException userEx = new UserAuthenticationException(userLogin, e);
 			logger.error("Exception occured while user authentication", e);
 			throw userEx;
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (final SQLException sqlEx) {
+				logger.error("SQL Exception occured while user authentication", sqlEx);
+			}
 		}
 
 		return false;

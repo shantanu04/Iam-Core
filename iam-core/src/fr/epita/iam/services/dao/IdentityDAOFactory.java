@@ -1,5 +1,6 @@
 package fr.epita.iam.services.dao;
 
+import fr.epita.iam.exceptions.JDBCInitException;
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
 
@@ -17,13 +18,17 @@ public class IdentityDAOFactory {
 	/** The current instance */
 	private static IdentityDAO currentInstance;
 
+	private IdentityDAOFactory() {
+
+	}
+
 	/**
 	 * This method is used to get instance of identityDAO
 	 * 
 	 * @return the identityDAO instance
 	 * @throws Exception
 	 */
-	public static IdentityDAO getDAO() throws Exception {
+	public static IdentityDAO getDAO() throws JDBCInitException {
 		final String backendMode = ConfigurationService.getProperty(ConfKey.BACKEND_MODE);
 
 		if (currentInstance == null) {
@@ -40,16 +45,14 @@ public class IdentityDAOFactory {
 	 * @return
 	 * @throws Exception
 	 */
-	private static IdentityDAO getInstance(final String backendMode) throws Exception {
+	private static IdentityDAO getInstance(final String backendMode) throws JDBCInitException {
 		IdentityDAO instance = null;
-		switch (backendMode) {
-		case "db":
+		if (backendMode.equals("db")) {
 			instance = new JDBCIdentityDAO();
-			break;
-
-		default:
-			throw new Exception("not implemented yet");
+		} else {
+			throw new JDBCInitException("not implemented yet");
 		}
+
 		return instance;
 
 	}

@@ -49,7 +49,7 @@ public interface DAO<T> {
 	 * Method to get entity by Id
 	 * 
 	 * @param id
-	 * @return
+	 * @return the identity
 	 * @throws EntityReadException
 	 */
 	public Identity getById(Serializable id) throws EntityReadException;
@@ -58,7 +58,7 @@ public interface DAO<T> {
 	 * Method to search entity
 	 * 
 	 * @param criteria
-	 * @return
+	 * @return the list of identities
 	 * @throws EntitySearchException
 	 */
 	public List<Identity> search(T criteria) throws EntitySearchException;

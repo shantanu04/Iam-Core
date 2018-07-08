@@ -9,8 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.datamodel.User;
+import fr.epita.iam.services.dao.IdentityDAO;
+import fr.epita.iam.services.dao.IdentityDAOFactory;
+import fr.epita.iam.services.dao.JDBCUserDAO;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class tests the implementation of all the CRUD operations related to the
+ * identity and user data model.
+ * </p>
  * 
  * @author Shantanu Kamble
  *
@@ -18,9 +27,22 @@ import fr.epita.iam.datamodel.Identity;
 public class TestDatabases {
 
 	public static void main(String[] args) throws Exception {
-		// final Connection connection = testConnection();
-		final Connection connection = getConnection();
-		// insertQuery(connection);
+
+		// test database connection
+		final Connection connection = testConnection();
+
+		// test user login
+		User user = new User();
+		user.setUsername("admin");
+		user.setPasskey("admin123");
+		JDBCUserDAO userDAO = new JDBCUserDAO();
+		boolean isValid = userDAO.checkLogin(user);
+		if (!isValid) {
+			System.out.println("User authentication failed");
+			return;
+		}
+
+		// display identities
 		List<Identity> identities = getIdentities(connection);
 		if (identities.size() != 0) {
 			for (int i = 0; i < identities.size(); i++) {
@@ -28,19 +50,39 @@ public class TestDatabases {
 			}
 		}
 
+		// create identity
+		Identity newIdentity = new Identity("Sample Test", "9123", "sample@test.com");
+		IdentityDAO dao = IdentityDAOFactory.getDAO();
+
+		dao.create(newIdentity);
+
+		// search identity
+		Identity criteria = new Identity();
+		criteria.setDisplayName("Test");
+		criteria.setEmail("sample@test");
+		dao.search(criteria);
+
+		// update identity
+		Identity updateIdentity = new Identity();
+		updateIdentity.setDisplayName("Tony Stark");
+		updateIdentity.setEmail("tony@gmail.com");
+		updateIdentity.setUid("9123");
+		dao.update(updateIdentity);
+
+		// delete identity
+		Identity deleteIdentity = new Identity();
+		deleteIdentity.setUid("9123");
+		dao.delete(deleteIdentity);
+
 	}
 
-	private static void insertQuery(final Connection connection) throws SQLException {
-		final PreparedStatement pstmt = connection.prepareStatement(
-				"INSERT INTO IDENTITIES (IDENTITY_DISPLAYNAME, IDENTITY_EMAIL, IDENTITY_UID) VALUES (?, ?, ?)");
-		pstmt.setString(1, "Clément Serr");
-		pstmt.setString(2, "cserr@cserr.com");
-		pstmt.setString(3, "9123");
-		pstmt.execute();
-		pstmt.close();
-		connection.close();
-	}
-
+	/**
+	 * This method is used to get identities from database
+	 * 
+	 * @param connection
+	 * @return list of identities
+	 * @throws SQLException
+	 */
 	private static List<Identity> getIdentities(final Connection connection) throws SQLException {
 		final PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM IDENTITIES");
 
@@ -61,6 +103,12 @@ public class TestDatabases {
 		return identityList;
 	}
 
+	/**
+	 * This method is used to test database connection
+	 * 
+	 * @return the connection
+	 * @throws Exception
+	 */
 	private static Connection testConnection() throws Exception {
 
 		String currentSchema = "";
@@ -74,6 +122,12 @@ public class TestDatabases {
 		return connection;
 	}
 
+	/**
+	 * This method is used to get database connection object
+	 * 
+	 * @return the connection
+	 * @throws SQLException
+	 */
 	private static Connection getConnection() throws SQLException {
 		// Given this context
 		final String url = "jdbc:derby://localhost:1527/testInstance;create=true";

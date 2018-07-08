@@ -121,6 +121,7 @@ public class Launcher {
 
 			case "5":
 				proceed = false;
+				System.out.println("\nExiting..");
 				logger.info("Exiting...");
 				break;
 			default:

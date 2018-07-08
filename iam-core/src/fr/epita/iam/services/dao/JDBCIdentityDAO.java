@@ -12,6 +12,7 @@ import java.util.List;
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.exceptions.EntityCreationException;
 import fr.epita.iam.exceptions.EntityDeletionException;
+import fr.epita.iam.exceptions.EntityReadException;
 import fr.epita.iam.exceptions.EntitySearchException;
 import fr.epita.iam.exceptions.EntityUpdateException;
 import fr.epita.iam.logger.Logger;
@@ -54,6 +55,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method will create the identity in the database
+	 * 
+	 * @param identity
+	 * @throws EntityCreationException
+	 * @see fr.epita.iam.services.DAO#create(java.lang.Object)
 	 */
 	@Override
 	public void create(Identity identity) throws EntityCreationException {
@@ -85,6 +90,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method will delete the identity from the database
+	 * 
+	 * @param identity
+	 * @throws EntityDeletionException
+	 * @see fr.epita.iam.services.DAO#delete(java.lang.Object)
 	 */
 	@Override
 	public void delete(Identity identity) throws EntityDeletionException {
@@ -120,6 +129,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method will update the identity in the database
+	 * 
+	 * @param identity
+	 * @throws EntityUpdateException
+	 * @see fr.epita.iam.services.DAO#update(java.lang.Object)
 	 */
 	@Override
 	public void update(Identity identity) throws EntityUpdateException {
@@ -149,6 +162,9 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method will assemble the update query
+	 * 
+	 * @param identity
+	 * @return the update query string
 	 */
 	private String assembleUpdateQuery(Identity identity) {
 		String sqlString = "";
@@ -174,7 +190,7 @@ public class JDBCIdentityDAO implements IdentityDAO {
 	 * 
 	 * @param statement
 	 * @param identity
-	 * @return
+	 * @return the prepared statement
 	 * @throws SQLException
 	 */
 	private PreparedStatement assemblePreparedStatement(PreparedStatement statement, Identity identity)
@@ -199,9 +215,13 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method gets identity by Id
+	 * 
+	 * @param id
+	 * @return the identity
+	 * @throws EntityReadException
 	 */
 	@Override
-	public Identity getById(Serializable id) {
+	public Identity getById(Serializable id) throws EntityReadException {
 		final Identity identity = new Identity();
 
 		return identity;
@@ -209,6 +229,10 @@ public class JDBCIdentityDAO implements IdentityDAO {
 
 	/**
 	 * This method will search the identity in the database
+	 * 
+	 * @param criteria
+	 * @return list of identities
+	 * @see fr.epita.iam.services.DAO#search(java.lang.Object)
 	 */
 	@Override
 	public List<Identity> search(Identity criteria) throws EntitySearchException {

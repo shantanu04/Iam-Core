@@ -8,6 +8,11 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
+ * <h3>Description</h3>
+ * <p>
+ * This class is used to test the extraction of values of keys from properties
+ * file
+ * </p>
  * 
  * @author Shantanu Kamble
  *

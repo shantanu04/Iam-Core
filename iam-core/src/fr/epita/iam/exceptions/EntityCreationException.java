@@ -28,7 +28,7 @@ public class EntityCreationException extends Exception {
 	/**
 	 * This method gets the user message
 	 * 
-	 * @return
+	 * @return the user message
 	 */
 	public String getUserMessage() {
 		return "The following entity creation has failed :" + entity.toString();

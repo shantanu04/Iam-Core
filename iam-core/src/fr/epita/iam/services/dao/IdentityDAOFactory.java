@@ -2,6 +2,7 @@ package fr.epita.iam.services.dao;
 
 import fr.epita.iam.services.conf.ConfKey;
 import fr.epita.iam.services.conf.ConfigurationService;
+import fr.epita.iam.services.dao.JDBCIdentityDAO;
 
 /**
  * <h3>Description</h3>

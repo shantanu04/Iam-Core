@@ -12,9 +12,17 @@ import java.util.Map;
  *
  */
 public class Identity {
+
+	/** The display name */
 	private String displayName;
+
+	/** The user id */
 	private String uid;
+
+	/** The email */
 	private String email;
+
+	/** The attributes map */
 	private Map<String, String> attributes;
 
 	/**

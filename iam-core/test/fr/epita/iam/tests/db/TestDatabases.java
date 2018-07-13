@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.datamodel.User;
 import fr.epita.iam.services.dao.IdentityDAO;
@@ -26,6 +29,9 @@ import fr.epita.iam.services.dao.JDBCUserDAO;
  */
 public class TestDatabases {
 
+	/** The logger */
+	private static final Logger logger = LogManager.getLogger(TestDatabases.class);
+
 	public static void main(String[] args) throws Exception {
 
 		// test database connection
@@ -38,7 +44,7 @@ public class TestDatabases {
 		JDBCUserDAO userDAO = new JDBCUserDAO();
 		boolean isValid = userDAO.checkLogin(user);
 		if (!isValid) {
-			System.out.println("User authentication failed");
+			logger.error("User authentication failed");
 			return;
 		}
 
@@ -46,7 +52,7 @@ public class TestDatabases {
 		List<Identity> identities = getIdentities(connection);
 		if (identities.size() != 0) {
 			for (int i = 0; i < identities.size(); i++) {
-				System.out.println("Identity" + i + 1 + " : " + identities.get(i));
+				logger.info("Identity" + i + 1 + " : " + identities.get(i));
 			}
 		}
 
@@ -118,7 +124,7 @@ public class TestDatabases {
 		if (!currentSchema.equals("TEST")) {
 			throw new Exception("problem: connection not operational");
 		}
-		System.out.println("Connection successful");
+		logger.info("Connection successful");
 		return connection;
 	}
 

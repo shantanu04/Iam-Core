@@ -22,7 +22,7 @@ import fr.epita.iam.launcher.Launcher;
 public class ConsoleOperations {
 
 	/** The logger */
-	private static final Logger logger = LogManager.getLogger(Launcher.class);
+	private static final Logger logger = LogManager.getLogger(ConsoleOperations.class);
 
 	/** The scanner */
 	private final Scanner scanner;

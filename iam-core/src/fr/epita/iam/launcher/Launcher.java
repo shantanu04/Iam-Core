@@ -20,7 +20,11 @@ import fr.epita.iam.ui.ConsoleOperations;
 /**
  * <h3>Description</h3>
  * <p>
- * This class is used to launch the application.
+ * This class is used to launch the application. When executed, the program will
+ * ask user to enter the username and password to login. The application will
+ * authenticate the credentials against the database table "Users". Once user is
+ * authenticated, a menu is displayed with possible options. Options are to
+ * Create, Search, Update and Delete an Identity.
  * </p>
  * 
  * @author Shantanu Kamble

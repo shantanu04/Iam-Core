@@ -43,8 +43,8 @@ public class Launcher {
 		final ConsoleOperations console = new ConsoleOperations();
 
 		// Welcome
-		System.out.println("\nWelcome to Identity Access Management System \n");
-		System.out.println("User Login\n");
+		System.out.println("\nWelcome to Identity and Access Management System \n");
+		System.out.println("You need to login in order to manage the identities\n");
 
 		// Authentication
 		User userLogin = console.readUserCredentialsFromConsole();
@@ -136,7 +136,7 @@ public class Launcher {
 
 		case "5":
 			proceed = false;
-			logger.info("Exiting..!!");
+			logger.info("Exiting the application");
 			break;
 		default:
 			logger.error("Invalid choice.");

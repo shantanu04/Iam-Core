@@ -33,9 +33,9 @@ public class ConsoleOperations {
 	 * @return
 	 */
 	public String readChoiceFromConsole() {
-		System.out.println("\n\n<-----MENU----->");
-		System.out.println("1) Create \n2)Search \n3)Update \n4)Delete \n5) Exit");
-		System.out.println("Enter your choice: ");
+		System.out.println("\n\n<-----MENU----->\n");
+		System.out.println("1) Create \n2) Search \n3) Update \n4) Delete \n5) Exit\n");
+		System.out.println("Enter your choice : ");
 		return scanner.nextLine();
 	}
 
@@ -46,10 +46,10 @@ public class ConsoleOperations {
 	 */
 	public User readUserCredentialsFromConsole() {
 		final User user = new User();
-		System.out.println("Please enter the username: ");
+		System.out.println("Please enter the username : ");
 		String line = scanner.nextLine();
 		user.setUsername(line);
-		System.out.println("Please enter the password: ");
+		System.out.println("Please enter the password : ");
 		line = scanner.nextLine();
 		user.setPasskey(line);
 
@@ -62,14 +62,15 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readIdentityFromConsole() {
+		System.out.println("\nEnter details of identity to be created\n");
 		final Identity identity = new Identity();
 		System.out.println("Please input the display name : ");
 		String line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the email");
+		System.out.println("Please input the email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
-		System.out.println("Please input uid");
+		System.out.println("Please input uid : ");
 		line = scanner.nextLine();
 		identity.setUid(line);
 		return identity;
@@ -81,12 +82,12 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readCriteriaFromConsole() {
-		System.out.println("Enter criteria");
+		System.out.println("\nEnter criteria for search\n");
 		final Identity identity = new Identity();
 		System.out.println("Please input the criterion for display name : ");
 		String line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the criterion for email");
+		System.out.println("Please input the criterion for email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
 
@@ -99,7 +100,7 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readUpdateIdentityFromConsole() {
-		System.out.println("Enter identity to update");
+		System.out.println("\nEnter identity to update\n");
 		final Identity identity = new Identity();
 		System.out.println("Please input the Identity UID to update : ");
 		String line = scanner.nextLine();
@@ -107,7 +108,7 @@ public class ConsoleOperations {
 		System.out.println("Please input the display name to update : ");
 		line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the new email id : ");
+		System.out.println("Please input the new email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
 
@@ -120,7 +121,7 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readDeleteIdentityFromConsole() {
-		System.out.println("Enter identity to delete");
+		System.out.println("\nEnter identity to delete\n");
 		final Identity identity = new Identity();
 		System.out.println("Please input the Identity UID to delete : ");
 		String line = scanner.nextLine();
@@ -137,7 +138,7 @@ public class ConsoleOperations {
 	public void displayIdentitiesInConsole(List<Identity> identities) {
 		// check if list is empty
 		if (identities.isEmpty()) {
-			System.out.println("No elements in the identity list.");
+			System.out.println("There are no elements to show in the identity list.\n");
 		}
 
 		int i = 1;

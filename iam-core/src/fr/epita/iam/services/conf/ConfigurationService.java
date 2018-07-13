@@ -28,18 +28,6 @@ public class ConfigurationService {
 	/** The logger */
 	private static final Logger logger = LogManager.getLogger(ConfigurationService.class);
 
-	/** The constant backend mode */
-	public static final String BACKEND_MODE = "backend.mode";
-
-	/** The constant fallback backend mode */
-	public static final String FALLBACK_BACKEND_MODE = "fallback.backend.mode";
-
-	/** The constant db backend */
-	public static final String DB_BACKEND = "db";
-
-	/** The constant file backend */
-	public static final String FILE_BACKEND = "file";
-
 	/** The properties */
 	private static Properties properties;
 

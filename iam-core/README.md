@@ -1,0 +1,2 @@
+#Identity and Access Management
+The identity and access management project implements basic features of CRUD system. It consists of two major elements, authentication of user and identity management. The project defines the user identity life cycle within an organization. It creates, or establishes the user identity, deals with user identity related operations, and finally the destruction of the user identity within the organization.

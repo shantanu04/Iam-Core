@@ -128,8 +128,7 @@ public class Identity {
 	 */
 	@Override
 	public String toString() {
-		return "Identity [displayName=" + displayName + ", uid=" + uid + ", email=" + email + ", attributes="
-				+ attributes + "]";
+		return "Identity [DisplayName : " + displayName + " | UID : " + uid + " | Email : " + email + "]";
 	}
 
 }

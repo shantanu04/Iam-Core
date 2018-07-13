@@ -51,7 +51,7 @@ public class JDBCUserDAO implements UserDAO {
 	 * This method will validate the login credentials of user
 	 * 
 	 * @param userLogin
-	 * @return
+	 * @return true if user credentials match else false
 	 */
 	public boolean checkLogin(User userLogin) throws UserAuthenticationException {
 		Connection conn = null;

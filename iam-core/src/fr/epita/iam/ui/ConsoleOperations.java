@@ -3,8 +3,12 @@ package fr.epita.iam.ui;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.datamodel.User;
+import fr.epita.iam.launcher.Launcher;
 
 /**
  * <h3>Description</h3>
@@ -16,6 +20,9 @@ import fr.epita.iam.datamodel.User;
  *
  */
 public class ConsoleOperations {
+
+	/** The logger */
+	private static final Logger logger = LogManager.getLogger(Launcher.class);
 
 	/** The scanner */
 	private final Scanner scanner;
@@ -33,9 +40,9 @@ public class ConsoleOperations {
 	 * @return
 	 */
 	public String readChoiceFromConsole() {
-		System.out.println("\n\n<-----MENU----->\n");
-		System.out.println("1) Create \n2) Search \n3) Update \n4) Delete \n5) Exit\n");
-		System.out.println("Enter your choice : ");
+		logger.info("\n\n<-----MENU----->\n");
+		logger.info("1) Create \n2) Search \n3) Update \n4) Delete \n5) Exit\n");
+		logger.info("Enter your choice : ");
 		return scanner.nextLine();
 	}
 
@@ -46,10 +53,10 @@ public class ConsoleOperations {
 	 */
 	public User readUserCredentialsFromConsole() {
 		final User user = new User();
-		System.out.println("Please enter the username : ");
+		logger.info("Please enter the username : ");
 		String line = scanner.nextLine();
 		user.setUsername(line);
-		System.out.println("Please enter the password : ");
+		logger.info("\nPlease enter the password : ");
 		line = scanner.nextLine();
 		user.setPasskey(line);
 
@@ -62,15 +69,15 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readIdentityFromConsole() {
-		System.out.println("\nEnter details of identity to be created\n");
+		logger.info("\nEnter details of identity to be created");
 		final Identity identity = new Identity();
-		System.out.println("Please input the display name : ");
+		logger.info("\nPlease input the display name : ");
 		String line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the email-id : ");
+		logger.info("\nPlease input the email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
-		System.out.println("Please input uid : ");
+		logger.info("\nPlease input uid : ");
 		line = scanner.nextLine();
 		identity.setUid(line);
 		return identity;
@@ -82,12 +89,12 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readCriteriaFromConsole() {
-		System.out.println("\nEnter criteria for search\n");
+		logger.info("\nEnter criteria for search");
 		final Identity identity = new Identity();
-		System.out.println("Please input the criterion for display name : ");
+		logger.info("\nPlease input the criterion for display name : ");
 		String line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the criterion for email-id : ");
+		logger.info("\nPlease input the criterion for email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
 
@@ -100,15 +107,15 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readUpdateIdentityFromConsole() {
-		System.out.println("\nEnter identity to update\n");
+		logger.info("\nEnter identity to update");
 		final Identity identity = new Identity();
-		System.out.println("Please input the Identity UID to update : ");
+		logger.info("\nPlease input the Identity UID to update : ");
 		String line = scanner.nextLine();
 		identity.setUid(line);
-		System.out.println("Please input the display name to update : ");
+		logger.info("\nPlease input the display name to update : ");
 		line = scanner.nextLine();
 		identity.setDisplayName(line);
-		System.out.println("Please input the new email-id : ");
+		logger.info("\nPlease input the new email-id : ");
 		line = scanner.nextLine();
 		identity.setEmail(line);
 
@@ -121,9 +128,9 @@ public class ConsoleOperations {
 	 * @return the identity
 	 */
 	public Identity readDeleteIdentityFromConsole() {
-		System.out.println("\nEnter identity to delete\n");
+		logger.info("\nEnter identity to delete");
 		final Identity identity = new Identity();
-		System.out.println("Please input the Identity UID to delete : ");
+		logger.info("\nPlease input the Identity UID to delete : ");
 		String line = scanner.nextLine();
 		identity.setUid(line);
 
@@ -138,13 +145,12 @@ public class ConsoleOperations {
 	public void displayIdentitiesInConsole(List<Identity> identities) {
 		// check if list is empty
 		if (identities.isEmpty()) {
-			System.out.println("There are no elements to show in the identity list.\n");
+			logger.error("There are no elements to show in the identity list.\n");
 		}
 
 		int i = 1;
 		for (final Identity identity : identities) {
-			System.out.print(i++);
-			System.out.println(" - " + identity);
+			logger.info(i++ + " - " + identity);
 		}
 	}
 

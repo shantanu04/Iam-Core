@@ -32,8 +32,10 @@ import fr.epita.iam.ui.ConsoleOperations;
  */
 public class Launcher {
 
+	/** The logger */
 	private static final Logger logger = LogManager.getLogger(Launcher.class);
 
+	/** The main method to launch the application */
 	public static void main(String[] args) {
 		// initialize resources
 		IdentityDAO dao = null;
@@ -47,8 +49,8 @@ public class Launcher {
 		final ConsoleOperations console = new ConsoleOperations();
 
 		// Welcome
-		System.out.println("\nWelcome to Identity and Access Management System \n");
-		System.out.println("You need to login in order to manage the identities\n");
+		logger.info("\nWelcome to Identity and Access Management System \n");
+		logger.info("You need to login in order to manage the identities\n");
 
 		// Authentication
 		User userLogin = console.readUserCredentialsFromConsole();
@@ -68,6 +70,12 @@ public class Launcher {
 
 	}
 
+	/**
+	 * This method will authenticate the user credentials
+	 * 
+	 * @param userLogin
+	 * @return true if user is authenticated else returns false
+	 */
 	private static boolean authenticateUser(User userLogin) {
 		JDBCUserDAO userDao = new JDBCUserDAO();
 		boolean isValid;
@@ -75,20 +83,28 @@ public class Launcher {
 			isValid = userDao.checkLogin(userLogin);
 
 			if (!isValid) {
-				System.out.println("You have entered wrong credentials. Please try again.");
-				logger.error("Authentication failed");
+				logger.error("You have entered wrong credentials. Please try again.");
 			} else {
-				System.out.println("Authentication successful");
 				logger.info("User authenticated successfully");
 				return true;
 			}
 		} catch (UserAuthenticationException userAuthEx) {
-			System.out.println("Some exception occured");
+			logger.error("Some exception occured");
 			logger.error(userAuthEx.getMessage());
 		}
 		return false;
 	}
 
+	/**
+	 * This method is used to choose the identity management option i.e. create,
+	 * search, update, delete or exit and execute the required flow.
+	 * 
+	 * @param dao
+	 * @param console
+	 * @param choice
+	 * @param proceed
+	 * @return true if user wants to proceed or else returns false
+	 */
 	private static boolean choiceMenu(IdentityDAO dao, final ConsoleOperations console, String choice,
 			boolean proceed) {
 		switch (choice) {
@@ -132,7 +148,7 @@ public class Launcher {
 			try {
 				final Identity deleteIdentity = console.readDeleteIdentityFromConsole();
 				dao.delete(deleteIdentity);
-				logger.info("Deleted identity successfully");
+				logger.info("Deleted identity successfully from database");
 			} catch (EntityDeletionException e) {
 				logger.error(e.getMessage());
 			}
